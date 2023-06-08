@@ -18,7 +18,7 @@ public class LoginController implements ActionListener {
     private JTextField username;
     private JTextField password;
     private JLabel errorLabel;
-    private String role;
+
 
     public LoginController(JTextField username, JTextField password, JLabel errorLabel) {
         this.username = username;
@@ -67,8 +67,10 @@ public class LoginController implements ActionListener {
                     userData.add(rowData);
                 }
 
-                Login login = new Login(userData);
-                login.doSomethingWithRole();
+                Login login = new Login();
+                login.setUserData(userData);
+                login.loginWithRole();
+   
                 ((Window) ((JComponent) e.getSource()).getTopLevelAncestor()).dispose();
 
                 // TODO: Do something after successful login, such as opening a new window

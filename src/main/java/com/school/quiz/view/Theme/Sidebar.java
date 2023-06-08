@@ -17,15 +17,45 @@ public class Sidebar extends JXPanel implements ActionListener {
     private static final int TOP_MARGIN = 40;
     private static final int VERTICAL_GAP = 30; // Adjust the vertical gap as desired
 
+    private JLabel titleLabel;
+    private JPanel buttonPanel;
     private ActionListener buttonActionListener;
 
     public Sidebar() {
         setLayout(new VerticalFlowLayout(VERTICAL_GAP));
+        addTitle("Dashboard");
+        createButtonPanel();
+    }
+
+    private void addTitle(String title) {
+        titleLabel = new JLabel(title);
+        titleLabel.setPreferredSize(new Dimension(180, 40)); // Adjust the size as needed
+        titleLabel.setBackground(BUTTON_BACKGROUND_COLOR);
+        titleLabel.setForeground(BUTTON_TEXT_COLOR);
+        titleLabel.setFont(BUTTON_FONT);
+        titleLabel.setOpaque(true);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        add(titleLabel);
+    }
+
+    private void createButtonPanel() {
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(new VerticalFlowLayout(VERTICAL_GAP));
+        buttonPanel.setOpaque(false);
+        add(buttonPanel);
+    }
+
+    public void setTitle(String title) {
+        if (titleLabel != null) {
+            titleLabel.setText(title);
+        }
     }
 
     public void addButton(String buttonName) {
         JButton button = createButton(buttonName);
-        add(button);
+        buttonPanel.add(button);
+        revalidate();
+        repaint();
     }
 
     public void addButtons(String[] buttonNames) {

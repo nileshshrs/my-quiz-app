@@ -5,16 +5,22 @@ import java.util.ArrayList;
 import com.school.quiz.view.StudentQuizPage;
 import com.school.quiz.view.TeacherQuizPage;
 
-
-
 public class Login {
-    private ArrayList<String []> userData;
+    private ArrayList<String[]> userData;
     
-    public Login(ArrayList <String []> userData){
+    public Login() {
+        this.userData = new ArrayList<>();
+    }
+
+    public ArrayList<String[]> getUserData() {
+        return userData;
+    }
+
+    public void setUserData(ArrayList<String[]> userData) {
         this.userData = userData;
     }
 
-    public void doSomethingWithRole(){
+    public void loginWithRole(){
         for(String[] data : userData){
             String username = data[3];
             String role = data[6];
@@ -27,6 +33,5 @@ public class Login {
                 new TeacherQuizPage(username);
             }
         }
-
     }
 }

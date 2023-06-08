@@ -21,11 +21,9 @@ import com.school.quiz.view.Theme.Sidebar;
 public class TeacherQuizPage extends JFrame {
 
     private JPanel currentPanel;
-
+    private QuizQuestionPanel quizQuestionPanel; // Moved outside the constructor
 
     public TeacherQuizPage(String username) {
-
-
         System.out.println(username);
         setTitle("Quiz Application");
         setSize(1600, 1000);
@@ -33,7 +31,7 @@ public class TeacherQuizPage extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel contentPanel = new JPanel();
+        final JPanel contentPanel = new JPanel();
         contentPanel.setLayout(null);
         contentPanel.setBackground(new Color(35, 178, 161));
 
@@ -55,38 +53,43 @@ public class TeacherQuizPage extends JFrame {
             e.printStackTrace();
         }
 
-        final QuizQuestionPanel quizQuestionPanel = new QuizQuestionPanel();
-        quizQuestionPanel.setBounds(350, 170, 1100, 650);
+        quizQuestionPanel = new QuizQuestionPanel(); // Initialize the quizQuestionPanel
 
         Sidebar sidebar = new Sidebar();
         sidebar.addButton("My Profile");
         sidebar.addButton("Quiz Questions");
         sidebar.addButton("");
+        sidebar.setTitle("Quizzeria");
+
         sidebar.setButtonActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonText = ((JButton) e.getSource()).getText();
                 System.out.println("Clicked: " + buttonText);
 
-                // Hide current panel
-                if (currentPanel != null) {
-                    currentPanel.setVisible(false);
+                // Remove current panel from its parent container
+                if (currentPanel != null && currentPanel.getParent() != null) {
+                    currentPanel.getParent().remove(currentPanel);
                 }
 
                 // Show new panel
                 if (buttonText.equals("Quiz Questions")) {
+                    contentPanel.add(quizQuestionPanel); // Add the panel back to the parent container
                     quizQuestionPanel.setVisible(true);
                     currentPanel = quizQuestionPanel;
                 } else if (buttonText.equals("My Profile")) {
-                    quizQuestionPanel.setVisible(true);
-                    currentPanel = quizQuestionPanel;
-                }
-                else{
+                    // Add code for My Profile panel
+                } else {
                     currentPanel = null;
-                    quizQuestionPanel.setVisible(false);
+                    // Add code for other panels
                 }
+
+                // Repaint the parent container to reflect the changes
+                contentPanel.revalidate();
+                contentPanel.repaint();
             }
         });
+
 
         sidebar.setBounds(40, 40, 200, getHeight() - 200);
         contentPanel.add(sidebar);
@@ -104,5 +107,4 @@ public class TeacherQuizPage extends JFrame {
     public static void main(String[] args) {
         new TeacherQuizPage("nilesh");
     }
-
 }

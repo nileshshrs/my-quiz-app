@@ -29,7 +29,7 @@ public class addQuestionsView extends JFrame {
         setSize(500, 700);
         setResizable(false);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         JXPanel contentPanel = new JXPanel();
         contentPanel.setBackground(new Color(35, 178, 161));
