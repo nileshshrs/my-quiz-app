@@ -41,11 +41,12 @@ public class TeacherQuizPage extends JFrame {
         applicationLabel.setForeground(Color.white);
         contentPanel.add(applicationLabel);
 
+        ImageIcon icon = null;
         try {
             URL imageUrl = getClass().getResource("/com/school/quiz/assets/graduation hat.png");
             BufferedImage image = ImageIO.read(imageUrl);
             Image resizedImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            ImageIcon icon = new ImageIcon(resizedImage);
+            icon = new ImageIcon(resizedImage);
             JLabel imageLabel = new JLabel(icon);
             imageLabel.setBounds(650, 45, imageLabel.getPreferredSize().width, imageLabel.getPreferredSize().height);
             contentPanel.add(imageLabel);
@@ -58,8 +59,16 @@ public class TeacherQuizPage extends JFrame {
         Sidebar sidebar = new Sidebar();
         sidebar.addButton("My Profile");
         sidebar.addButton("Quiz Questions");
-        sidebar.addButton("");
+        sidebar.addButton("Take Quiz");
+        sidebar.addButton("Your Scores");
+        sidebar.addButton("All Scores");
+        sidebar.addButton("logout");
+    
+
+    
+    
         sidebar.setTitle("Quizzeria");
+  
 
         sidebar.setButtonActionListener(new ActionListener() {
             @Override
@@ -89,7 +98,6 @@ public class TeacherQuizPage extends JFrame {
                 contentPanel.repaint();
             }
         });
-
 
         sidebar.setBounds(40, 40, 200, getHeight() - 200);
         contentPanel.add(sidebar);
