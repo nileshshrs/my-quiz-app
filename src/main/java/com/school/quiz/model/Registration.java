@@ -14,6 +14,20 @@ public class Registration {
     private String confirmPassword;
     private String role;
 
+    public Registration(String firstName, String lastName, String username, String email, String password, String confirmPassword, String role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.role = role;
+
+        registerUser(firstName, lastName, username, email, confirmPassword, role);
+    }
+
+    // Getters and setters
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -69,8 +83,7 @@ public class Registration {
     public String getRole() {
         return role;
     }
-
-    public void registration(String firstName, String lastName, String username, String email, String password, String role) {
+    public void registerUser(String firstName, String lastName, String username, String email, String password, String role) {
         Connection connection = null;
         PreparedStatement statement = null;
 

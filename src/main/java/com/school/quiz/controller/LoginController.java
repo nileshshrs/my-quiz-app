@@ -25,7 +25,7 @@ public class LoginController implements ActionListener {
         this.password = password;
         this.errorLabel = errorLabel;
     }
-
+    //recieving data for validation
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -67,16 +67,15 @@ public class LoginController implements ActionListener {
                     userData.add(rowData);
                 }
 
-                Login login = new Login();
-                login.setUserData(userData);
-                login.loginWithRole();
+                new Login(userData);
+
    
                 ((Window) ((JComponent) e.getSource()).getTopLevelAncestor()).dispose();
 
                 // TODO: Do something after successful login, such as opening a new window
             } else {
                 // Login failed
-                errorLabel.setText("Incorrect username or password");
+                errorLabel.setText("Invalid username or password");
                 errorLabel.setVisible(true);
             }
 

@@ -5,26 +5,19 @@ import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.sql.*;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.school.quiz.model.Registration;
 import com.school.quiz.view.LoginView;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class RegistrationController implements ActionListener {
     private JTextField firstname;
@@ -50,6 +43,7 @@ public class RegistrationController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // Retrieve the values from the registration form
         String firstName = firstname.getText().toLowerCase();
         String lastName = lastname.getText().toLowerCase();
         String userName = username.getText().toLowerCase();
@@ -113,6 +107,7 @@ public class RegistrationController implements ActionListener {
 
             final Timer timer = new Timer();
             timer.schedule(new TimerTask() {
+
                 @Override
                 public void run() {
                     errorLabel.setVisible(false);
@@ -158,6 +153,7 @@ public class RegistrationController implements ActionListener {
 
             final Timer timer = new Timer();
             timer.schedule(new TimerTask() {
+
                 @Override
                 public void run() {
                     errorLabel.setVisible(false);
@@ -181,9 +177,11 @@ public class RegistrationController implements ActionListener {
             }, 7500);
 
         } else {
-            Registration registration = new Registration();
-            registration.registration(firstName, lastName, userName, email, password, role);
 
+            // Create an instance of the Registration class
+            new Registration(firstName, lastName, userName, email, password, confirmPassword, role);
+
+            // Reset the form fields
             firstname.setText("");
             lastname.setText("");
             username.setText("");
@@ -191,15 +189,18 @@ public class RegistrationController implements ActionListener {
             this.password.setText("");
             this.confirmPassword.setText("");
             roleComboBox.setSelectedIndex(0);
+
+            // Show success message
             errorLabel.setText("Registration successful");
             errorLabel.setVisible(true);
             errorLabel.setBackground(new Color(230, 255, 237)); // light green color
             errorLabel.setForeground(new Color(0, 100, 0));
 
+            // Close the registration view after a delay
             final Timer timer = new Timer();
             final Component sourceComponent = (Component) e.getSource();
-
             timer.schedule(new TimerTask() {
+
                 @Override
                 public void run() {
                     errorLabel.setVisible(false);
@@ -209,9 +210,10 @@ public class RegistrationController implements ActionListener {
                     Window window = SwingUtilities.getWindowAncestor(sourceComponent);
                     window.dispose();
                 }
-            }, 5000);
-        }
 
+            }, 5000);
+
+        }
     }
 
     public static boolean isValidEmail(String email) {
