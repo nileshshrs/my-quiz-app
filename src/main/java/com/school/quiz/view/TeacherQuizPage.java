@@ -24,7 +24,7 @@ public class TeacherQuizPage extends JFrame {
     private QuizQuestionPanel quizQuestionPanel; // Moved outside the constructor
 
     public TeacherQuizPage(String username) {
-        System.out.println(username);
+        // System.out.println(username);
         setTitle("Quiz Application");
         setSize(1600, 1000);
         setLocationRelativeTo(null);

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+// import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import org.jdesktop.swingx.JXLabel;
+// import org.jdesktop.swingx.JXTextField;
 
 import com.school.quiz.controller.LoginController;
 import com.school.quiz.view.Theme.ModernButton;
@@ -67,19 +71,31 @@ public class LoginView extends JFrame {
             e.printStackTrace();
         }
 
+        JXLabel TitleLabel = new JXLabel("Quizzeria");
+        panel.add(TitleLabel);
+        TitleLabel.setBounds(55, 180, 280, 40);
+        TitleLabel.setForeground(Color.WHITE);
+        TitleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        TitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
         JLabel errorLabel = new JLabel("");
-        errorLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         errorLabel.setForeground(new Color(255, 0, 0));
         errorLabel.setBackground(Color.PINK);
         errorLabel.setOpaque(true);
         errorLabel.setVisible(false);
+        errorLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
         errorLabel.setBounds(65, 230, 280, 25);
         panel.add(errorLabel);
 
-        final JTextField username = new ModernTextField("username", Color.white, Color.white,Color.white,Color.white);
+        final JTextField username = new ModernTextField("username", Color.white,
+                Color.white, Color.white, Color.white);
         username.setBounds(65, 270, 280, 35); // Set the bounds of the text field
         panel.add(username);
+        // final JXTextField username = new JXTextField();
+        // username.setPrompt("username");
+        // username.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        // username.setOpaque(false);
 
         final JTextField password = new ModernPasswordField("password");
         password.setBounds(65, 340, 280, 35);

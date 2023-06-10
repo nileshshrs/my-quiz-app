@@ -14,6 +14,8 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import org.jdesktop.swingx.JXLabel;
+
 import com.school.quiz.controller.RegistrationController;
 import com.school.quiz.view.Theme.ModernButton;
 import com.school.quiz.view.Theme.ModernPasswordField;
@@ -55,7 +57,7 @@ public class RegistrationView extends JFrame {
 
          // Set the bounds of the imageLabel to center it
 
-         imageLabel.setBounds(50, 170, imageLabel.getPreferredSize().width, imageLabel.getPreferredSize().height);
+         imageLabel.setBounds(50, 90, imageLabel.getPreferredSize().width, imageLabel.getPreferredSize().height);
 
          // Add the imageLabel to the left panel
          leftPanel.setLayout(null); // Set the layout manager to null to use absolute positioning
@@ -64,6 +66,12 @@ public class RegistrationView extends JFrame {
          // handle the exception
          e.printStackTrace();
       }
+      JXLabel TitleLabel = new JXLabel("Quizzeria");
+      leftPanel.add(TitleLabel);
+      TitleLabel.setBounds(100, 450, 280, 50);
+      TitleLabel.setForeground(Color.WHITE);
+      TitleLabel.setFont(new Font("Arial", Font.BOLD, 60));
+      TitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
       // ImageIcon imageIcon = new
       // ImageIcon(getClass().getResource("/com/school/quiz/assets/graduation
