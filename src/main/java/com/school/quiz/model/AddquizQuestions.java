@@ -85,20 +85,32 @@ public class AddQuizQuestions {
         Connection connection = null;
         PreparedStatement statement = null;
 
-       String sql = "CREATE TABLE IF NOT EXISTS ()";
-
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Establish the database connection
+            connection = DriverManager
+                    .getConnection("jdbc:mysql://localhost:3306/quiz_application?user=root&password=SiberiaV2.0");
 
-            connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/quiz_application?user=root&password=SiberiaV2.0");
+            // Create the 'questions' table if it doesn't exist
+            String createTableSql = "CREATE TABLE IF NOT EXISTS questions (question_id INT PRIMARY KEY AUTO_INCREMENT, quiz_id INT, question_text VARCHAR(255), "
+                    + "option1 VARCHAR(255), option2 VARCHAR(255), option3 VARCHAR(255), option4 VARCHAR(255), " +
+                    "correct_answer VARCHAR(255), FOREIGN KEY (quiz_id) REFERENCES quiz(quiz_id));";
+            statement = connection.prepareStatement(createTableSql);
+            statement.executeUpdate();
 
-            statement = connection.prepareStatement(sql);
-        } catch (ClassNotFoundException exception) {
-            System.out.println("MySQL JDBC driver not found");
-            exception.printStackTrace();
+            // Insert data into the 'questions' table
+            String insertSql = "INSERT INTO questions (quiz_id, question_text, option1, option2, option3, option4, correct_answer) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            statement = connection.prepareStatement(insertSql);
+            statement.setInt(1, ID);
+            statement.setString(2, question);
+            statement.setString(3, answer1);
+            statement.setString(4, answer2);
+            statement.setString(5, answer3);
+            statement.setString(6, answer4);
+            statement.setString(7, answer5);
+
+            statement.executeUpdate();
         } catch (SQLException exception) {
-            System.out.println("Failed to connect to the database");
+            System.out.println("Failed to connect to the database or execute SQL statements");
             exception.printStackTrace();
         } finally {
             try {

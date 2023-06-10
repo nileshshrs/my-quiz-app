@@ -120,6 +120,15 @@ public class AddQuestionController implements ActionListener {
                         window.dispose();
                     }
                 }, 3000);
+
+                // this set text to empty is unnecessary as the window autimatically closes after 3 seconds was used to add questions
+                QuestionField.setText("");
+                OptionField1.setText("");
+                OptionField2.setText("");
+                OptionField3.setText("");
+                OptionField4.setText("");
+                CorrectAnswerField.setText("");
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
