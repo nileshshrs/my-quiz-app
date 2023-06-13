@@ -221,3 +221,35 @@ public class RegistrationController implements ActionListener {
         return matcher.matches();
     }
 }
+<--       // Create a DefaultTableModel to hold the data for the JTable
+tableModel = new DefaultTableModel();
+JTable table = new JTable(tableModel);
+table.setBackground(new Color(156, 225, 215));
+table.setGridColor(Color.white);
+// Set the header background color
+JTableHeader tableHeader = table.getTableHeader();
+tableHeader.setBackground(new Color(75, 159, 150));
+tableHeader.setForeground(Color.WHITE);
+tableHeader.setFont(new Font("Arial", Font.BOLD, 13));
+
+// Define the column names
+String[] columnNames = { "Quiz Name", "Question ID", "Question", "Option 1", "Option 2", "Option 3", "Option 4",
+        "Correct Answer" };
+tableModel.setColumnIdentifiers(columnNames);
+displayQuestions(QuestionData);
+
+// Add the question data to the table model
+// for (String[] rowData : QuestionData) {
+//     tableModel.addRow(rowData);
+// }
+
+// Create a scroll pane to contain the table
+JScrollPane scrollPane = new JScrollPane(table);
+scrollPane.setBounds(50, 50, 1000, 400);
+scrollPane.getViewport().setBackground(new Color(156, 225, 215));
+// Create a custom border with white color
+Border whiteBorder = BorderFactory.createLineBorder(Color.WHITE);
+
+// Set the viewport border
+scrollPane.setViewportBorder(whiteBorder);
+add(scrollPane);-->

@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,6 +17,7 @@ import java.util.TimerTask;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 import com.school.quiz.model.AddQuizQuestions;
 import com.school.quiz.view.LoginView;
@@ -30,10 +32,11 @@ public class AddQuestionController implements ActionListener {
     private String SelectedSubject;
     private int SelectedSubjectId;
     private JLabel ErrorLabel;
+    private DefaultTableModel TableModel;
 
     public AddQuestionController(JTextField questionField, JTextField optionField1, JTextField optionField2,
             JTextField optionField3, JTextField optionField4, JTextField correctAnswerField, String selectedSubject,
-            int selectedSubjectId, JLabel errorLabel) {
+            int selectedSubjectId, JLabel errorLabel, DefaultTableModel tableModel) {
         this.QuestionField = questionField;
         this.OptionField1 = optionField1;
         this.OptionField2 = optionField2;
@@ -43,6 +46,7 @@ public class AddQuestionController implements ActionListener {
         this.SelectedSubject = selectedSubject;
         this.SelectedSubjectId = selectedSubjectId;
         this.ErrorLabel = errorLabel;
+        this.TableModel = tableModel;
     }
 
     // recieving data for validation
@@ -63,6 +67,13 @@ public class AddQuestionController implements ActionListener {
         String Answer4 = OptionField4.getText().toLowerCase();
         String CorrectAnswer = CorrectAnswerField.getText().toLowerCase();
         int subjectID = SelectedSubjectId;
+
+        String[] Data = { Question,
+                Answer1,
+                Answer2,
+                Answer3,
+                Answer4,
+                CorrectAnswer };
 
         // System.out.println(Question);
         // System.out.println(Answer1);
@@ -90,44 +101,47 @@ public class AddQuestionController implements ActionListener {
         // add database validation for questions
         else {
             try {
+                String SQL = "SELECT * FROM questions WHERE question_text = ?";
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/quiz_application", "root",
                         "SiberiaV2.0");
-                Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                PreparedStatement stmt = con.prepareStatement(SQL, ResultSet.TYPE_SCROLL_SENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+
+                stmt.setString(1, Question);
+
+                ResultSet rs = stmt.executeQuery();
 
                 // do the sql validation here when the database is created
+                if (rs.next()) {
+                    ErrorLabel.setText("Question already exists");
+                } //
 
-                //
+                else {
+                    new AddQuizQuestions(Question, Answer1, Answer2, Answer3, Answer4, CorrectAnswer, subjectID);
+
+                    ErrorLabel.setText("Question has been added.");
+                    ErrorLabel.setVisible(true);
+                    ErrorLabel.setBackground(new Color(230, 255, 237)); // light green color
+                    ErrorLabel.setForeground(new Color(0, 100, 0));
+
+                    TableModel.addRow(Data);
+
+                    // Close the view after a delay
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            ErrorLabel.setText("");
+                            ErrorLabel.setVisible(false);
+                            timer.cancel();
+                            // Close the registration view
+
+                            // Window window = SwingUtilities.getWindowAncestor(sourceComponent);
+                            // window.dispose();
+                        }
+                    }, 3000);
+                }
 
                 // do this in else block
-
-                new AddQuizQuestions(Question, Answer1, Answer2, Answer3, Answer4, CorrectAnswer, subjectID);
-
-                ErrorLabel.setText("Question has been added.");
-                ErrorLabel.setVisible(true);
-                ErrorLabel.setBackground(new Color(230, 255, 237)); // light green color
-                ErrorLabel.setForeground(new Color(0, 100, 0));
-
-                // Close the view after a delay
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        ErrorLabel.setText("");
-                        ErrorLabel.setVisible(false);
-                        timer.cancel();
-                        // Close the registration view
-
-                        Window window = SwingUtilities.getWindowAncestor(sourceComponent);
-                        window.dispose();
-                    }
-                }, 3000);
-
-                // this set text to empty is unnecessary as the window autimatically closes after 3 seconds was used to add questions
-                QuestionField.setText("");
-                OptionField1.setText("");
-                OptionField2.setText("");
-                OptionField3.setText("");
-                OptionField4.setText("");
-                CorrectAnswerField.setText("");
 
             } catch (SQLException ex) {
                 ex.printStackTrace();

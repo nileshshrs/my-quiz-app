@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -16,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.school.quiz.model.QuizQuestionModel;
 import com.school.quiz.view.Theme.Sidebar;
 
 public class TeacherQuizPage extends JFrame {
@@ -54,7 +57,12 @@ public class TeacherQuizPage extends JFrame {
             e.printStackTrace();
         }
 
-        quizQuestionPanel = new QuizQuestionPanel(); // Initialize the quizQuestionPanel
+        QuizQuestionModel quizQuestionModel = new QuizQuestionModel();
+        ArrayList<String[]> quizData = quizQuestionModel.getQuizData();
+        for (String[] dataArray : quizData) {
+            System.out.println(Arrays.toString(dataArray));
+        }
+        quizQuestionPanel = new QuizQuestionPanel(quizData); // Initialize the quizQuestionPanel
 
         Sidebar sidebar = new Sidebar();
         sidebar.addButton("My Profile");
@@ -63,12 +71,8 @@ public class TeacherQuizPage extends JFrame {
         sidebar.addButton("Your Scores");
         sidebar.addButton("All Scores");
         sidebar.addButton("logout");
-    
 
-    
-    
         sidebar.setTitle("Quizzeria");
-  
 
         sidebar.setButtonActionListener(new ActionListener() {
             @Override
@@ -99,7 +103,7 @@ public class TeacherQuizPage extends JFrame {
             }
         });
 
-        sidebar.setBounds(40, 40, 200, getHeight() - 200);
+        sidebar.setBounds(20, 170, 200, getHeight() - 320);
         contentPanel.add(sidebar);
         contentPanel.add(quizQuestionPanel);
 
