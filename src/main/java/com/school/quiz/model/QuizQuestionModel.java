@@ -10,6 +10,8 @@ public class QuizQuestionModel {
 
     public QuizQuestionModel() {
         quizData = new ArrayList<>();
+        System.out.println(getQuizData());
+
         questionData();
         // new QuizQuestionPanel(quizData);
         // System.out.println(quizData);
