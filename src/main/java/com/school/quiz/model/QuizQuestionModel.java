@@ -3,7 +3,7 @@ package com.school.quiz.model;
 import java.sql.*;
 import java.util.ArrayList;
 
-import com.school.quiz.view.QuizQuestionPanel;
+
 
 public class QuizQuestionModel {
     private ArrayList<String[]> quizData;

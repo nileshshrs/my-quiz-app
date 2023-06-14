@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 
 import javax.swing.WindowConstants;
 
+import com.school.quiz.model.Profile;
 import com.school.quiz.model.QuizQuestionModel;
 import com.school.quiz.view.Theme.Sidebar;
 
@@ -26,8 +28,11 @@ public class TeacherQuizPage extends JFrame {
 
     private JPanel currentPanel;
     private QuizQuestionPanel quizQuestionPanel;
+    private String USERNAME;
 
     public TeacherQuizPage(String username) {
+
+        this.USERNAME= username;
         setTitle("Quiz Application");
         setSize(1600, 1000);
         setLocationRelativeTo(null);
@@ -56,12 +61,20 @@ public class TeacherQuizPage extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //getting quiz data
 
         QuizQuestionModel quizQuestionModel = new QuizQuestionModel();
         ArrayList<String[]> quizData = quizQuestionModel.getQuizData();
 
+        //getting profile data
+
+        Profile profileData= new Profile(USERNAME);
+        ArrayList<String[]> userData=profileData.getUserData();
+
+
+
         quizQuestionPanel = new QuizQuestionPanel(quizData);
-        final ProfileView profile = new ProfileView();
+        final ProfileView profile = new ProfileView(userData);
 
         Sidebar sidebar = new Sidebar();
         sidebar.addButton("My Profile");
@@ -113,7 +126,7 @@ public class TeacherQuizPage extends JFrame {
 
         setVisible(true);
     }
-
+//logout
     private void disposeWindow() {
         new LoginView();
         this.dispose();

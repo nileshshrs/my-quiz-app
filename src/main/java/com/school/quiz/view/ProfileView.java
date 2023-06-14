@@ -3,28 +3,26 @@ package com.school.quiz.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.school.quiz.controller.AddQuestionController;
-import com.school.quiz.view.Theme.GlassPanel;
-import com.school.quiz.view.Theme.ModernButton;
-import com.school.quiz.view.Theme.ModernTextField;
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import java.awt.*;
-import java.awt.event.ActionEvent;
+import com.school.quiz.view.Theme.GlassPanel;
+
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+import javax.swing.JPanel;
+
 
 public class ProfileView extends GlassPanel {
 
+    private ArrayList <String []> userData;
+    private JPanel userCard;
 
-    public ProfileView() {
+    public ProfileView(ArrayList <String[]> userdata) {
+        this.userData=userdata;
 
+        for (String data []: userData){
+            System.out.println(data[5]);
+        }
 
   
         setLayout(null);
