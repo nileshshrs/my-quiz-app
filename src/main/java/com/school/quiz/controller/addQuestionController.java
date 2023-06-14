@@ -1,8 +1,7 @@
 package com.school.quiz.controller;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Window;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -10,17 +9,17 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+
 import javax.swing.table.DefaultTableModel;
 
 import com.school.quiz.model.AddQuizQuestions;
-import com.school.quiz.view.LoginView;
+
 
 public class AddQuestionController implements ActionListener {
     private JTextField QuestionField;
@@ -51,14 +50,6 @@ public class AddQuestionController implements ActionListener {
 
     // recieving data for validation
     public void actionPerformed(ActionEvent event) {
-        // System.out.println("Question: " + questionField.getText());
-        // System.out.println("Option 1: " + optionField1.getText());
-        // System.out.println("Option 2: " + optionField2.getText());
-        // System.out.println("Option 3: " + optionField3.getText());
-        // System.out.println("Option 4: " + optionField4.getText());
-        // System.out.println("Correct Answer: " + correctAnswerField.getText());
-        // System.out.println("Selected Subject: " + selectedSubject);
-        // System.out.println("Selected Subject ID: " + selectedSubjectId);
 
         String Question = QuestionField.getText().toLowerCase();
         String Answer1 = OptionField1.getText().toLowerCase();
@@ -75,13 +66,6 @@ public class AddQuestionController implements ActionListener {
                 Answer4,
                 CorrectAnswer };
 
-        // System.out.println(Question);
-        // System.out.println(Answer1);
-        // System.out.println(Answer2);
-        // System.out.println(Answer3);
-        // System.out.println(Answer4);
-        // System.out.println(CorrectAnswer);
-        // System.out.println(subjectID);
 
         final Timer timer = new Timer();
         // final Component sourceComponent = (Component) event.getSource();

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.school.quiz.controller.AddQuestionController;
+import com.school.quiz.controller.EditQuestionController;
 import com.school.quiz.view.Theme.GlassPanel;
 import com.school.quiz.view.Theme.ModernButton;
 import com.school.quiz.view.Theme.ModernTextField;
@@ -43,7 +44,6 @@ public class QuizQuestionPanel extends GlassPanel {
         tableHeader.setBackground(new Color(57, 121, 114));
         tableHeader.setForeground(new Color(248, 248, 255));
         tableHeader.setFont(new Font("Arial", Font.BOLD, 13));
-
 
         // Define the column names
         String[] columnNames = { "Quiz Name", "Question", "Option 1", "Option 2", "Option 3", "Option 4",
@@ -188,14 +188,6 @@ public class QuizQuestionPanel extends GlassPanel {
                         optionTextField4.setText(option4);
                         correctAnswerTextField.setText(correctAnswer);
 
-                        System.out.println("Selected Row: " + selectedRow);
-                        System.out.println("Quiz Name: " + quizName);
-                        System.out.println("Question: " + question);
-                        System.out.println("Option 1: " + option1);
-                        System.out.println("Option 2: " + option2);
-                        System.out.println("Option 3: " + option3);
-                        System.out.println("Option 4: " + option4);
-                        System.out.println("Correct Answer: " + correctAnswer);
                     }
                 }
             }
@@ -220,37 +212,42 @@ public class QuizQuestionPanel extends GlassPanel {
             public void actionPerformed(ActionEvent e) {
                 String selectedSubject = (String) subjectComboBox.getSelectedItem();
                 int selectedSubjectId = subjectMap.get(selectedSubject);
-                String question = questionTextField.getText();
+                EditQuestionController editQuestionController = new EditQuestionController(questionTextField,
+                        optionTextField1, optionTextField2, optionTextField3, optionTextField4, correctAnswerTextField,
+                        selectedSubject, selectedSubjectId, errorLabel, tableModel);
+                editQuestionController.actionPerformed(e);
 
-                // Iterate over the rows of the table model
-                for (int i = 0; i < tableModel.getRowCount(); i++) {
-                    String questionValue = (String) tableModel.getValueAt(i, 1); // Assuming the question is in the
-                                                                                 // second column (index 1)
+                // // Iterate over the rows of the table model
+                // for (int i = 0; i < tableModel.getRowCount(); i++) {
+                // String questionValue = (String) tableModel.getValueAt(i, 1); // Assuming the
+                // question is in the
+                // // second column (index 1)
 
-                    // Check if the question value matches the desired value
-                    if (questionValue.equals(question)) {
-                        // Retrieve the existing values from the table
-                        // String existingSubject = (String) tableModel.getValueAt(i, 0);
-                        // String existingOption1 = (String) tableModel.getValueAt(i, 2);
-                        // String existingOption2 = (String) tableModel.getValueAt(i, 3);
-                        // String existingOption3 = (String) tableModel.getValueAt(i, 4);
-                        // String existingOption4 = (String) tableModel.getValueAt(i, 5);
-                        // String existingCorrectAnswer = (String) tableModel.getValueAt(i, 6);
+                // // Check if the question value matches the desired value
+                // if (questionValue.equals(question)) {
+                // // Retrieve the existing values from the table
+                // // String existingSubject = (String) tableModel.getValueAt(i, 0);
+                // // String existingOption1 = (String) tableModel.getValueAt(i, 2);
+                // // String existingOption2 = (String) tableModel.getValueAt(i, 3);
+                // // String existingOption3 = (String) tableModel.getValueAt(i, 4);
+                // // String existingOption4 = (String) tableModel.getValueAt(i, 5);
+                // // String existingCorrectAnswer = (String) tableModel.getValueAt(i, 6);
 
-                        // Update the values of the matching row
-                        tableModel.setValueAt(selectedSubject, i, 0); // Assuming subject is in the first column (index
-                                                                      // 0)
-                        tableModel.setValueAt(question, i, 1);
-                        tableModel.setValueAt(optionTextField1.getText(), i, 2);
-                        tableModel.setValueAt(optionTextField2.getText(), i, 3);
-                        tableModel.setValueAt(optionTextField3.getText(), i, 4);
-                        tableModel.setValueAt(optionTextField4.getText(), i, 5);
-                        tableModel.setValueAt(correctAnswerTextField.getText(), i, 6);
+                // // Update the values of the matching row
+                // tableModel.setValueAt(selectedSubject, i, 0); // Assuming subject is in the
+                // first column (index
+                // // 0)
+                // tableModel.setValueAt(question, i, 1);
+                // tableModel.setValueAt(optionTextField1.getText(), i, 2);
+                // tableModel.setValueAt(optionTextField2.getText(), i, 3);
+                // tableModel.setValueAt(optionTextField3.getText(), i, 4);
+                // tableModel.setValueAt(optionTextField4.getText(), i, 5);
+                // tableModel.setValueAt(correctAnswerTextField.getText(), i, 6);
 
-                        System.out.println("Row edited: " + i);
-                        break; // Exit the loop after editing the row
-                    }
-                }
+                // System.out.println("Row edited: " + i);
+                // break; // Exit the loop after editing the row
+                // }
+                // }
             }
         });
 
