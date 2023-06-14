@@ -25,6 +25,7 @@ public class TeacherQuizPage extends JFrame {
 
     private JPanel currentPanel;
     private QuizQuestionPanel quizQuestionPanel; // Moved outside the constructor
+  
 
     public TeacherQuizPage(String username) {
         // System.out.println(username);
@@ -59,10 +60,11 @@ public class TeacherQuizPage extends JFrame {
 
         QuizQuestionModel quizQuestionModel = new QuizQuestionModel();
         ArrayList<String[]> quizData = quizQuestionModel.getQuizData();
-        for (String[] dataArray : quizData) {
-            System.out.println(Arrays.toString(dataArray));
-        }
+
         quizQuestionPanel = new QuizQuestionPanel(quizData); // Initialize the quizQuestionPanel
+
+        // profile panel
+        final ProfileView profile = new ProfileView();
 
         Sidebar sidebar = new Sidebar();
         sidebar.addButton("My Profile");
@@ -92,6 +94,9 @@ public class TeacherQuizPage extends JFrame {
                     currentPanel = quizQuestionPanel;
                 } else if (buttonText.equals("My Profile")) {
                     // Add code for My Profile panel
+                    currentPanel = profile;
+                    contentPanel.add(currentPanel);
+
                 } else {
                     currentPanel = null;
                     // Add code for other panels

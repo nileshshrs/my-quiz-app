@@ -149,17 +149,6 @@ public class QuizQuestionPanel extends GlassPanel {
 
                 String selectedSubject = (String) subjectComboBox.getSelectedItem();
                 int selectedSubjectId = subjectMap.get(selectedSubject);
-                // Get the values from the text fields
-                String question = questionTextField.getText();
-                String option1 = optionTextField1.getText();
-                String option2 = optionTextField2.getText();
-                String option3 = optionTextField3.getText();
-                String option4 = optionTextField4.getText();
-                String correctAnswer = correctAnswerTextField.getText();
-
-                // Create an array with the values
-                // String[] Data = { selectedSubject, question, option1, option2, option3,
-                // option4, correctAnswer };
 
                 AddQuestionController controller = new AddQuestionController(questionTextField,
                         optionTextField1,
@@ -168,21 +157,6 @@ public class QuizQuestionPanel extends GlassPanel {
                         selectedSubjectId, errorLabel, tableModel);
                 controller.actionPerformed(e);
 
-                // // Add the row to the table model
-                // tableModel.addRow(Data);
-
-                // errorLabel.setText("Question has been added.");
-                // errorLabel.setVisible(true);
-                // errorLabel.setBackground(new Color(230, 255, 237)); // light green color
-                // errorLabel.setForeground(new Color(0, 100, 0));
-
-                // Clear the text fields
-                // questionTextField.setText("");
-                // optionTextField1.setText("");
-                // optionTextField2.setText("");
-                // optionTextField3.setText("");
-                // optionTextField4.setText("");
-                // correctAnswerTextField.setText("");
             }
         });
 

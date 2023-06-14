@@ -84,7 +84,7 @@ public class AddQuestionController implements ActionListener {
         // System.out.println(subjectID);
 
         final Timer timer = new Timer();
-        final Component sourceComponent = (Component) event.getSource();
+        // final Component sourceComponent = (Component) event.getSource();
 
         if (Question.isEmpty() || Answer1.isEmpty() || Answer2.isEmpty() || Answer3.isEmpty() || Answer4.isEmpty()
                 || CorrectAnswer.isEmpty()) {
@@ -114,9 +114,15 @@ public class AddQuestionController implements ActionListener {
                 // do the sql validation here when the database is created
                 if (rs.next()) {
                     ErrorLabel.setText("Question already exists");
+                    ErrorLabel.setVisible(true);
                 } //
+                else if (Question.isEmpty() || Answer1.isEmpty() || Answer1.isEmpty() || Answer2.isEmpty()
+                        || Answer3.isEmpty() || Answer4.isEmpty() || CorrectAnswer.isEmpty()) {
+                    ErrorLabel.setText("Fields cannot be empty");
+                    ErrorLabel.setVisible(true);
 
-                else {
+                } else {
+
                     new AddQuizQuestions(Question, Answer1, Answer2, Answer3, Answer4, CorrectAnswer, subjectID);
 
                     ErrorLabel.setText("Question has been added.");
@@ -125,6 +131,13 @@ public class AddQuestionController implements ActionListener {
                     ErrorLabel.setForeground(new Color(0, 100, 0));
 
                     TableModel.addRow(Data);
+
+                    QuestionField.setText("");
+                    OptionField1.setText("");
+                    OptionField2.setText("");
+                    OptionField3.setText("");
+                    OptionField4.setText("");
+                    CorrectAnswerField.setText("");
 
                     // Close the view after a delay
                     timer.schedule(new TimerTask() {
