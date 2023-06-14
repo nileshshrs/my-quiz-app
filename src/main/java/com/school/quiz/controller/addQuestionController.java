@@ -20,7 +20,6 @@ import javax.swing.table.DefaultTableModel;
 
 import com.school.quiz.model.AddQuizQuestions;
 
-
 public class AddQuestionController implements ActionListener {
     private JTextField QuestionField;
     private JTextField OptionField1;
@@ -66,7 +65,6 @@ public class AddQuestionController implements ActionListener {
                 Answer4,
                 CorrectAnswer };
 
-
         final Timer timer = new Timer();
         // final Component sourceComponent = (Component) event.getSource();
 
@@ -99,11 +97,28 @@ public class AddQuestionController implements ActionListener {
                 if (rs.next()) {
                     ErrorLabel.setText("Question already exists");
                     ErrorLabel.setVisible(true);
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            ErrorLabel.setText("");
+                            ErrorLabel.setVisible(false);
+                            timer.cancel();
+
+                        }
+                    }, 3000);
                 } //
                 else if (Question.isEmpty() || Answer1.isEmpty() || Answer1.isEmpty() || Answer2.isEmpty()
                         || Answer3.isEmpty() || Answer4.isEmpty() || CorrectAnswer.isEmpty()) {
                     ErrorLabel.setText("Fields cannot be empty");
                     ErrorLabel.setVisible(true);
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            ErrorLabel.setText("");
+                            ErrorLabel.setVisible(false);
+                            timer.cancel();
+                        }
+                    }, 3000);
 
                 } else {
 
@@ -130,10 +145,6 @@ public class AddQuestionController implements ActionListener {
                             ErrorLabel.setText("");
                             ErrorLabel.setVisible(false);
                             timer.cancel();
-                            // Close the registration view
-
-                            // Window window = SwingUtilities.getWindowAncestor(sourceComponent);
-                            // window.dispose();
                         }
                     }, 3000);
                 }
