@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -18,22 +17,22 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import javax.swing.WindowConstants;
+
 import com.school.quiz.model.QuizQuestionModel;
 import com.school.quiz.view.Theme.Sidebar;
 
 public class TeacherQuizPage extends JFrame {
 
     private JPanel currentPanel;
-    private QuizQuestionPanel quizQuestionPanel; // Moved outside the constructor
-  
+    private QuizQuestionPanel quizQuestionPanel;
 
     public TeacherQuizPage(String username) {
-        // System.out.println(username);
         setTitle("Quiz Application");
         setSize(1600, 1000);
         setLocationRelativeTo(null);
         setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         final JPanel contentPanel = new JPanel();
         contentPanel.setLayout(null);
@@ -42,7 +41,7 @@ public class TeacherQuizPage extends JFrame {
         JLabel applicationLabel = new JLabel("Quizzeria");
         applicationLabel.setBounds(750, 0, 500, 200);
         applicationLabel.setFont(new Font("Arial", Font.BOLD, 37));
-        applicationLabel.setForeground(Color.white);
+        applicationLabel.setForeground(Color.WHITE);
         contentPanel.add(applicationLabel);
 
         ImageIcon icon = null;
@@ -61,9 +60,7 @@ public class TeacherQuizPage extends JFrame {
         QuizQuestionModel quizQuestionModel = new QuizQuestionModel();
         ArrayList<String[]> quizData = quizQuestionModel.getQuizData();
 
-        quizQuestionPanel = new QuizQuestionPanel(quizData); // Initialize the quizQuestionPanel
-
-        // profile panel
+        quizQuestionPanel = new QuizQuestionPanel(quizData);
         final ProfileView profile = new ProfileView();
 
         Sidebar sidebar = new Sidebar();
@@ -72,7 +69,7 @@ public class TeacherQuizPage extends JFrame {
         sidebar.addButton("Take Quiz");
         sidebar.addButton("Your Scores");
         sidebar.addButton("All Scores");
-        sidebar.addButton("logout");
+        sidebar.addButton("Log Out");
 
         sidebar.setTitle("Quizzeria");
 
@@ -82,27 +79,24 @@ public class TeacherQuizPage extends JFrame {
                 String buttonText = ((JButton) e.getSource()).getText();
                 System.out.println("Clicked: " + buttonText);
 
-                // Remove current panel from its parent container
                 if (currentPanel != null && currentPanel.getParent() != null) {
                     currentPanel.getParent().remove(currentPanel);
                 }
 
-                // Show new panel
                 if (buttonText.equals("Quiz Questions")) {
-                    contentPanel.add(quizQuestionPanel); // Add the panel back to the parent container
+                    contentPanel.add(quizQuestionPanel);
                     quizQuestionPanel.setVisible(true);
                     currentPanel = quizQuestionPanel;
                 } else if (buttonText.equals("My Profile")) {
-                    // Add code for My Profile panel
                     currentPanel = profile;
                     contentPanel.add(currentPanel);
-
+                } else if (buttonText.equals("Log Out")) {
+                    disposeWindow();
+                    return;
                 } else {
                     currentPanel = null;
-                    // Add code for other panels
                 }
 
-                // Repaint the parent container to reflect the changes
                 contentPanel.revalidate();
                 contentPanel.repaint();
             }
@@ -114,11 +108,15 @@ public class TeacherQuizPage extends JFrame {
 
         getContentPane().add(contentPanel);
 
-        // Set quiz panel as the default panel
         currentPanel = quizQuestionPanel;
         currentPanel.setVisible(true);
 
         setVisible(true);
+    }
+
+    private void disposeWindow() {
+        new LoginView();
+        this.dispose();
     }
 
     public static void main(String[] args) {
