@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.school.quiz.controller.AddQuestionController;
+import com.school.quiz.controller.DeleteQuestionController;
 import com.school.quiz.controller.EditQuestionController;
 import com.school.quiz.view.Theme.GlassPanel;
 import com.school.quiz.view.Theme.ModernButton;
@@ -16,7 +17,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -160,7 +161,7 @@ public class QuizQuestionPanel extends GlassPanel {
             }
         });
 
-        // edit part
+        // fetching data from table part
 
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -171,7 +172,7 @@ public class QuizQuestionPanel extends GlassPanel {
                     int selectedRow = table.getSelectedRow();
                     if (selectedRow != -1) {
                         // Retrieve the values from the selected row
-                        String quizName = table.getValueAt(selectedRow, 0).toString();
+ 
                         String question = table.getValueAt(selectedRow, 1).toString();
                         String option1 = table.getValueAt(selectedRow, 2).toString();
                         String option2 = table.getValueAt(selectedRow, 3).toString();
@@ -197,12 +198,22 @@ public class QuizQuestionPanel extends GlassPanel {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow != -1) {
-                    // Remove the selected row from the table model
-                    tableModel.removeRow(selectedRow);
-                    System.out.println("Row deleted: " + selectedRow);
-                }
+                DeleteQuestionController deleteController=new DeleteQuestionController(table, tableModel, errorLabel);
+                deleteController.actionPerformed(e);
+
+                // int selectedRow = table.getSelectedRow();
+                // if (selectedRow != -1) {
+                //     // Remove the selected row from the table model
+                //     tableModel.removeRow(selectedRow);
+                //     System.out.println("Row deleted: " + selectedRow);
+
+                questionTextField.setText("");
+                optionTextField1.setText("");
+                optionTextField2.setText("");
+                optionTextField3.setText("");
+                optionTextField4.setText("");
+                correctAnswerTextField.setText("");
+                // }
             }
         });
 
