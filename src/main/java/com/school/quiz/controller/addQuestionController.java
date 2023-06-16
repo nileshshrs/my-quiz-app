@@ -57,8 +57,9 @@ public class AddQuestionController implements ActionListener {
         String Answer4 = OptionField4.getText().toLowerCase();
         String CorrectAnswer = CorrectAnswerField.getText().toLowerCase();
         int subjectID = SelectedSubjectId;
+        String selectedSubject = SelectedSubject;
 
-        String[] Data = { Question,
+        String[] Data = { selectedSubject, Question,
                 Answer1,
                 Answer2,
                 Answer3,
