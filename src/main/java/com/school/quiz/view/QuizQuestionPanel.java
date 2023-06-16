@@ -172,7 +172,7 @@ public class QuizQuestionPanel extends GlassPanel {
                     int selectedRow = table.getSelectedRow();
                     if (selectedRow != -1) {
                         // Retrieve the values from the selected row
- 
+
                         String question = table.getValueAt(selectedRow, 1).toString();
                         String option1 = table.getValueAt(selectedRow, 2).toString();
                         String option2 = table.getValueAt(selectedRow, 3).toString();
@@ -198,14 +198,14 @@ public class QuizQuestionPanel extends GlassPanel {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DeleteQuestionController deleteController=new DeleteQuestionController(table, tableModel, errorLabel);
+                DeleteQuestionController deleteController = new DeleteQuestionController(table, tableModel, errorLabel);
                 deleteController.actionPerformed(e);
 
                 // int selectedRow = table.getSelectedRow();
                 // if (selectedRow != -1) {
-                //     // Remove the selected row from the table model
-                //     tableModel.removeRow(selectedRow);
-                //     System.out.println("Row deleted: " + selectedRow);
+                // // Remove the selected row from the table model
+                // tableModel.removeRow(selectedRow);
+                // System.out.println("Row deleted: " + selectedRow);
 
                 questionTextField.setText("");
                 optionTextField1.setText("");
