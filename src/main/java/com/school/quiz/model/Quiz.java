@@ -2,43 +2,55 @@ package com.school.quiz.model;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+public class Quiz {
 
+    private String QuizName;
 
-public class QuizQuestionModel {
     private ArrayList<String[]> quizData;
 
-    public QuizQuestionModel() {
-        quizData = new ArrayList<>();
+    public Quiz(String quizname) {
 
-        questionData();
-        // new QuizQuestionPanel(quizData);
-        // System.out.println(quizData);
+        quizData = new ArrayList<>();
+        setQuizName(quizname);
+
+        retrieveData(quizname);
+
     }
 
-    public ArrayList<String[]> getQuizData() {
+    public void setQuizName(String quizname) {
+        this.QuizName = quizname;
+    }
+
+    public String getQuizName() {
+        return QuizName;
+    }
+
+    public void setQuizData(ArrayList<String[]> newQuizData) {
+        this.quizData = newQuizData;
+    }
+
+    public ArrayList<String[]> getnewQuizData() {
         return quizData;
     }
 
-    public void setQuestionData(ArrayList<String[]> quizData) {
-        this.quizData = quizData;
-    }
-
-    public void questionData() {
-
+    public void retrieveData(String quizname) {
         Connection connection = null;
         PreparedStatement statement = null;
-        String SQL = "SELECT q.quiz_name, " +
-                "qu.question_id, qu.question_text, qu.option1, qu.option2, qu.option3, qu.option4, qu.correct_answer " +
+        String sql = "SELECT  q.quiz_name, qu.question_id, qu.question_text, qu.option1, qu.option2, qu.option3, qu.option4, qu.correct_answer "
+                +
                 "FROM quiz q " +
                 "JOIN questions qu ON q.quiz_id = qu.quiz_id " +
+                "WHERE q.quiz_name = ? " +
                 "ORDER BY qu.question_id ASC;";
 
         try {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/quiz_application?user=root&password=SiberiaV2.0");
 
-            statement = connection.prepareStatement(SQL);
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, quizname);
 
             ResultSet rs = statement.executeQuery();
 
@@ -52,24 +64,15 @@ public class QuizQuestionModel {
                 String correct_answer = rs.getString("correct_answer");
 
                 String[] rowData = { quiz_name, question, answer1, answer2, answer3, answer4, correct_answer };
+
                 quizData.add(rowData);
             }
-            setQuestionData(quizData);
 
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
     }
 
-    public static void main(String[] args) {
-        new QuizQuestionModel();
-        // List<String[]> quizData = model.getQuizData();
 
-        // for (String[] data : quizData) {
-        // System.out.println(Arrays.toString(data));
-        // }
 
-        // String userStringData = Arrays.deepToString(quizData.toArray());
-        // System.out.println(userStringData);
-    }
 }
