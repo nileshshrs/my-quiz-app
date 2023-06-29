@@ -1,4 +1,4 @@
-package com.school.quiz.model;
+package com.school.quiz.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
